@@ -1,0 +1,2 @@
+# Eval set hashes must be identical on Windows and Linux CI.
+src/data/eval/*.jsonl text eol=lf

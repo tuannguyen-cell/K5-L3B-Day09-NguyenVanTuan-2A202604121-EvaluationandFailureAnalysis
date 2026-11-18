@@ -34,11 +34,19 @@ jobs:
       - run: python -m lab9.smoke
       - run: python -m pytest -q -m student -o addopts= -k "lab9 and not advanced"
       - run: python -m lab9.evalset --check
+      - name: Read the protected base metric spec for the ratchet
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
+        shell: bash
+        run: |
+          mkdir -p reports
+          git fetch --no-tags origin "$BASE_SHA"
+          git show "$BASE_SHA:src/config/metric_spec.yaml" > reports/base_metric_spec.yaml
       - name: Evaluate and gate the PR swarm
         shell: bash
         run: |
           python -m lab9.eval --shape swarm --spec "$EVAL_SPEC" --out reports/eval_pr.json
-          python -m lab9.gate --pr reports/eval_pr.json --baseline "$EVAL_BASELINE" --spec "$EVAL_SPEC"
+          python -m lab9.gate --pr reports/eval_pr.json --baseline "$EVAL_BASELINE" --spec "$EVAL_SPEC" --base-spec reports/base_metric_spec.yaml
       - name: Check the committed baseline and the M3 metric
         run: python -m lab9.ci_check --pr reports/eval_pr.json --baseline "$EVAL_BASELINE" --spec "$EVAL_SPEC"
       - name: Verify the gate accepts fixed
@@ -82,4 +90,18 @@ jobs:
       - if: steps.has.outputs.v2
         run: python -m lab9.evalset --v2
       - if: steps.has.outputs.v2
-        run: python -m lab9.mutation --spec config/metric_spec_v2.yaml --baseline reports/baseline_v2.json
+        name: Read base v2 spec for the ratchet
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
+        shell: bash
+        run: |
+          mkdir -p reports
+          git fetch --no-tags origin "$BASE_SHA"
+          # First v2 submission has no v2 spec on main; the version starts its ratchet here.
+          if git cat-file -e "$BASE_SHA:src/config/metric_spec_v2.yaml"; then
+            git show "$BASE_SHA:src/config/metric_spec_v2.yaml" > reports/base_metric_spec_v2.yaml
+          else
+            cp config/metric_spec_v2.yaml reports/base_metric_spec_v2.yaml
+          fi
+      - if: steps.has.outputs.v2
+        run: python -m lab9.mutation --spec config/metric_spec_v2.yaml --baseline reports/baseline_v2.json --base-spec reports/base_metric_spec_v2.yaml

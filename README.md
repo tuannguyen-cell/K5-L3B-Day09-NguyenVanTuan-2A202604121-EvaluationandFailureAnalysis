@@ -1,5 +1,7 @@
 # K5 · Day 9 · Lab — Evaluation & Failure Analysis (LogiX-VN)
 
+**Bài làm: Nguyễn Văn Tuấn · 2A202604121.** Đã triển khai M0–M7 tại local. Xem [hướng dẫn bài nộp](docs/SUBMISSION_READY.md), [eval card](docs/eval_card.md) và output kiểm chứng ở `src/reports/validation.log`. Tái tạo đầy đủ trong `src/`: `python -m lab9.verify_submission --full`. CI trên GitHub và việc nộp LMS cần được xác nhận riêng.
+
 > Nối tiếp Lab 8. Lab 8 trả lời "agent có chạy không"; Lab 9 trả lời **"làm sao biết bản mới tốt hơn — và chặn được bản tệ trước khi merge"**.
 > Không cần API key: MockLLM + judge replay. **Không Langfuse / OTel** (observability học ở Day 14).
 
