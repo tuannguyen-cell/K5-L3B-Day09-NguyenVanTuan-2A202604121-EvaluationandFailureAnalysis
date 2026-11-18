@@ -6,8 +6,8 @@ Code và grader là cùng revision của bài nộp này; dùng `git rev-parse H
 
 | Tập | Nguồn | SHA | Kích thước | Baseline run ID |
 |---|---|---|---|---|
-| v1 | lab8_public; labels_v1.json tách riêng | a16035d1e23a | 14 item × 5 seed = 70 trial | E-swarm-20261118-a160 |
-| v2 | v1 + instructor adversarial pack; labels_v2.json | 68c86831e285 | 28 item × 5 seed = 140 trial | E-swarm-20261118-68c8 |
+| v1 | lab8_public; labels_v1.json tách riêng | c2ca65c66376 | 14 item × 5 seed = 70 trial | E-swarm-20261118-c2ca |
+| v2 | v1 + instructor adversarial pack; labels_v2.json | 1dc7cdb25417 | 28 item × 5 seed = 140 trial | E-swarm-20261118-1dc7 |
 
 Các item là regression/adversarial public, không phải held-out. Provenance giữ matrix_id, trace reference, nguồn nhãn và người kiểm; không đặt nhãn inline.
 
@@ -23,7 +23,7 @@ Các item là regression/adversarial public, không phải held-out. Provenance 
 | pass_5 | 0.9286 | 1.0000 | 0.7143 | min=0.80, cảnh báo |
 | cost_per_success | 49.5670 | 48.7157 | 81.2020 | tăng tối đa 10%, cảnh báo; đơn vị cost mô phỏng |
 
-Nguồn: `reports/baseline_v1.json`, `eval_fixed.json` (E-fixed-20261118-a160), `eval_seeded_regression.json` (E-seeded_regression-20261118-a160). Seeded regression: Δ pass_rate=−0.271, paired percentile CI95% [−0.500, −0.057], exit 1. Fixed: Δ=+0.014, CI [0.000, +0.043], exit 0. Bootstrap resample **item mean trên seed**, không coi 70 trial là 70 mẫu độc lập; 1.000 resample, rng=2027.
+Nguồn: `reports/baseline_v1.json`, `eval_fixed.json` (E-fixed-20261118-c2ca), `eval_seeded_regression.json` (E-seeded_regression-20261118-c2ca). Seeded regression: Δ pass_rate=−0.271, paired percentile CI95% [−0.500, −0.057], exit 1. Fixed: Δ=+0.014, CI [0.000, +0.043], exit 0. Bootstrap resample **item mean trên seed**, không coi 70 trial là 70 mẫu độc lập; 1.000 resample, rng=2027.
 
 Metric FM-08 đọc số tiền có đơn vị đ/đồng/VND/VNĐ/₫ trong reply và so ledger. C-008 misreport nói 35.000đ khi ledger=20.000đ dù Lab8 PASS. Không dùng proposal thay ledger. Reference swarm không phát reply nên consistency không có mâu thuẫn để kiểm: metric trả PASS khi hoàn toàn không có reply; đây không phải bằng chứng chất lượng trả lời. Với reply resolved đã phát, thiếu số tiền bị đánh FAIL. Parser chưa bao phủ số tiền viết bằng chữ hay mọi cách diễn đạt ngôn ngữ tự nhiên.
 

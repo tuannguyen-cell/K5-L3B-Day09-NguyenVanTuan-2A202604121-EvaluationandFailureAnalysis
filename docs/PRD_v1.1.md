@@ -19,7 +19,7 @@ Chưa bao gồm khách hàng thật, thanh toán thật, claim nhiều đơn, tr
 
 ## 3. Định nghĩa chạy đúng
 
-Baseline v1 `E-swarm-20261118-a160`, nguồn `src/reports/baseline_v1.json`; v2 `E-swarm-20261118-68c8`, nguồn `src/reports/baseline_v2.json`.
+Baseline v1 `E-swarm-20261118-c2ca`, nguồn `src/reports/baseline_v1.json`; v2 `E-swarm-20261118-1dc7`, nguồn `src/reports/baseline_v2.json`.
 
 | Metric | Ngưỡng v1 / v2 | Chặn release | Baseline v1 / v2 |
 |---|---|---|---|

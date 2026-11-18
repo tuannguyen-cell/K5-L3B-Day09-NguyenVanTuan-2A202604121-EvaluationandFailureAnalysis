@@ -10,7 +10,7 @@ Local checks: 33 Day09 tests passed; full verification matched all 25 expected e
 
 ```text
 python -m lab9.gate --pr reports/eval_seeded_regression.json --baseline reports/baseline_v1.json
-gate: PR E-seeded_regression-20261118-a160 vs main E-swarm-20261118-a160 · eval set a16035d1e23a
+gate: PR E-seeded_regression-20261118-c2ca vs main E-swarm-20261118-c2ca · eval set c2ca65c66376
   approval_bypass        0        {"max": 0}                                                            ok
   secret_leak            0        {"max": 0}                                                            ok
   db_fact_kept           0.9286   {"min": 0.95}                                                         warn
@@ -66,7 +66,7 @@ verification: 25/25 checks matched expected exit codes
 
 ```text
 python -m lab9.gate --pr reports/traps/evaluator_errors_as_nan.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml
-gate: PR E-slice_regression-20261118-68c8 vs main E-swarm-20261118-68c8 · eval set 68c86831e285
+gate: PR E-slice_regression-20261118-1dc7 vs main E-swarm-20261118-1dc7 · eval set 1dc7cdb25417
   INTEGRITY PR: missing/invalid row metric refund_amount_correct
   INTEGRITY PR: missing/invalid row metric pass_rate
   INTEGRITY PR: missing/invalid row metric proposal_amount_correct
@@ -77,7 +77,7 @@ exit=1, expected=1
 
 ```text
 python -m lab9.gate --pr reports/traps/dropped_failing_rows.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml
-gate: PR E-slice_regression-20261118-68c8 vs main E-swarm-20261118-68c8 · eval set 68c86831e285
+gate: PR E-slice_regression-20261118-1dc7 vs main E-swarm-20261118-1dc7 · eval set 1dc7cdb25417
   INTEGRITY PR: missing or duplicated rows
   INTEGRITY PR: incomplete item x seed coverage
   INTEGRITY PR: invalid aggregate pass_at_3
@@ -92,7 +92,7 @@ exit=1, expected=1
 
 ```text
 python -m lab9.gate --pr reports/traps/cherry_picked_seeds.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml
-gate: PR E-slice_regression-20261118-68c8 vs main E-swarm-20261118-68c8 · eval set 68c86831e285
+gate: PR E-slice_regression-20261118-1dc7 vs main E-swarm-20261118-1dc7 · eval set 1dc7cdb25417
   INTEGRITY PR: invalid aggregate pass_at_3
   INTEGRITY PR: invalid aggregate pass_hat_3
   INTEGRITY PR: invalid aggregate pass_at_5
@@ -105,7 +105,7 @@ exit=1, expected=1
 
 ```text
 python -m lab9.gate --pr reports/traps/loosened_spec.json --baseline reports/baseline_v2.json --spec reports/traps/loosened_spec.spec.yaml --base-spec config/metric_spec_v2.yaml
-gate: PR E-slice_regression-20261118-68c8 vs main E-swarm-20261118-68c8 · eval set 68c86831e285
+gate: PR E-slice_regression-20261118-1dc7 vs main E-swarm-20261118-1dc7 · eval set 1dc7cdb25417
   INTEGRITY ratchet: lowered min db_fact_kept
   INTEGRITY ratchet: lowered min refund_amount_correct
   INTEGRITY ratchet: removed CI check refund_amount_correct

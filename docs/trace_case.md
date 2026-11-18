@@ -2,7 +2,7 @@
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `seeded_regression C-002@11`, report `E-seeded_regression-20261118-a160`, eval set SHA `a16035d1e23a` |
+| Trial | `seeded_regression C-002@11`, report `E-seeded_regression-20261118-c2ca`, eval set SHA `c2ca65c66376` |
 | Triệu chứng | Lab8 FAIL `status resolved != denied`; RefundAmountCorrect FAIL: ledger 20.000đ và 1 khoản hoàn, nhãn 0đ và 0 khoản. Reply nói đã hoàn 20.000đ, khớp ledger nhưng sai quyền lợi. |
 | Bước sai đầu tiên | Event **3** `model_override`, payload `{"delay_days": 5}`. |
 | Vì sao đầu tiên | Event 1 bàn giao chỉ dùng read tools, event 2 investigator trả DB `delay_days=2`; đến event 3 mới thay bằng lời ticket. Event 4 quote 20.000đ là hệ quả của dữ kiện đã bị thay. |
