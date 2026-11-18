@@ -1,30 +1,22 @@
-# Trace case: từ trace tới quyết định sai đầu tiên
-
-Một trace case trả lời một câu: **bước nào là bước sai đầu tiên**, và test nào sẽ bắt được nó lần sau.
-
-```bash
-cd src
-python -m lab9.trace_case --shape seeded_regression --claim C-002 --seed 11
-python -m lab9.trace_case --shape fixed --claim C-002 --seed 11   # đối chứng
-```
-
-Lệnh in ra ba phần: các event trong trace (`reply`, `decision`, `model_override`, `error` …), ledger so với nhãn, và lý do của grader Lab 8.
-
-## Mẫu điền (mỗi bạn 1 case, lấy từ trial đang fail trong report)
+# Trace case — C-002@11
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `<shape> <claim>@<seed>`, run ID trong report |
-| Triệu chứng | Grader nào fail; reply nói gì so với ledger ghi gì |
-| Bước sai đầu tiên | Số thứ tự event + kind + trích payload (≤1 dòng) |
-| Vì sao là bước *đầu tiên* | Các bước trước đó đúng ra sao (dẫn số event) |
-| Failure mode | Mã FM-xx trong `docs/failure_taxonomy.md` |
-| Đối chứng | Cùng claim@seed trên shape `fixed`: bước đó khác thế nào |
-| Regression test | Tên test + grader/assert nào bắt được; đã thấy fail trên variant lỗi và pass trên `fixed` chưa |
-| Chưa chắc chắn | Điều trace không chứng minh được |
+| Trial | `seeded_regression C-002@11`, report `E-seeded_regression-20261118-a160`, eval set SHA `a16035d1e23a` |
+| Triệu chứng | Lab8 FAIL `status resolved != denied`; RefundAmountCorrect FAIL: ledger 20.000đ và 1 khoản hoàn, nhãn 0đ và 0 khoản. Reply nói đã hoàn 20.000đ, khớp ledger nhưng sai quyền lợi. |
+| Bước sai đầu tiên | Event **3** `model_override`, payload `{"delay_days": 5}`. |
+| Vì sao đầu tiên | Event 1 bàn giao chỉ dùng read tools, event 2 investigator trả DB `delay_days=2`; đến event 3 mới thay bằng lời ticket. Event 4 quote 20.000đ là hệ quả của dữ kiện đã bị thay. |
+| Failure mode | FM-03 ticket_trust. Không gán FM-08 chỉ vì số tiền sai nhãn: reply ở đây khớp ledger. |
+| Đối chứng | `fixed C-002@11`: event 3 là quote `amount_vnd=0`, `reason=no_entitlement`; event 4 reply denied; ledger=0; không có override. |
+| Regression test | `tests/test_lab9_regressions.py::test_lab9_c002_first_wrong_step_and_fixed_control`: xác nhận event 3, grader fail trên seeded_regression và pass trên fixed. |
+| Chưa chắc chắn | MockLLM không chứng minh model thật suy luận giống vậy; trace không ghi mọi biến nội bộ hoặc diễn biến phê duyệt trong host. |
 
-## Quy tắc
+Tái tạo trong `src/`:
 
-- Đọc **ledger trước reply**: reply trôi chảy vẫn có thể đi kèm một khoản hoàn sai.
-- "Bước sai đầu tiên" phải dẫn số event cụ thể, không phải "agent bị nhầm".
-- Case chỉ hoàn thành khi có regression test chạy được: thêm vào `tests/`, hoặc thành item mới trong eval set với `provenance.from_trace`.
+```powershell
+..\.venv\Scripts\python -m lab9.trace_case --shape seeded_regression --claim C-002 --seed 11
+..\.venv\Scripts\python -m lab9.trace_case --shape fixed --claim C-002 --seed 11
+..\.venv\Scripts\python -m pytest -q tests/test_lab9_regressions.py
+```
+
+Anchor độc lập ở `reports/anchor_evidence.json` do `lab9.evidence` sinh. Test không đòi đúng câu văn, số tool call hay toàn bộ đường đi của một refactor hợp lệ.
